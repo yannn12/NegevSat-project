@@ -40,7 +40,7 @@ char* CMDParserTests::runTests(){
 	int numBytes = 296;
 	string data(missions, numBytes);
 	receive_queue->enqueue(data);
-	string packet = receive_queue->dequeue();
+	string packet = receive_queue->dequeuestr();
 	validator->buildPacket(packet);
 	vector<WorkDescription::WorkDescription> parsed_works;
 	if (validator->validate()){

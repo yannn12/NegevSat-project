@@ -39,7 +39,7 @@ void SendTask::send(string packet){
 }
 
 string SendTask::dequeueMessage(int index){
-	return sendQueues[index]->dequeue();
+	return sendQueues[index]->dequeuestr();
 }
 
 void SendTask::obtain_state(){
@@ -84,37 +84,37 @@ rtems_task SendTask::body(rtems_task_argument argument){
 			switch (send_type) {
 			case STATIC_SEND:
 				//printf(" * SEND TASK:: type of send is STATIC_SEND *\n");
-				packet = sendQueues[SENDQ_STATIC_INDEX]->dequeue();
+				packet = sendQueues[SENDQ_STATIC_INDEX]->dequeuestr();
 				//printf("packet to send : %s\n", &packet[0]);
 				send(packet);
 				break;
 			case ENERGY_SEND:
 				//printf(" * SEND TASK:: type of send is ENERGY_SEND *\n");
-				packet = sendQueues[SENDQ_ENERGY_INDEX]->dequeue();
+				packet = sendQueues[SENDQ_ENERGY_INDEX]->dequeuestr();
 				send(packet);
 				if (packet_counter == PACKET_COUNTER_LIMIT){
 					packet_counter = 0;
-					packet = sendQueues[SENDQ_STATIC_INDEX]->dequeue();
+					packet = sendQueues[SENDQ_STATIC_INDEX]->dequeuestr();
 					send(packet);
 				}
 				break;
 			case TEMP_SEND:
 				//printf(" * SEND TASK:: type of send is TEMP_SEND *\n");
-				packet = sendQueues[SENDQ_TEMP_INDEX]->dequeue();
+				packet = sendQueues[SENDQ_TEMP_INDEX]->dequeuestr();
 				send(packet);
 				if (packet_counter == PACKET_COUNTER_LIMIT){
 					packet_counter = 0;
-					packet = sendQueues[SENDQ_STATIC_INDEX]->dequeue();
+					packet = sendQueues[SENDQ_STATIC_INDEX]->dequeuestr();
 					send(packet);
 				}
 				break;
 			case MIXED_SEND:
 				//printf(" * SEND TASK:: type of send is MIXED_SEND *\n");
-				packet = sendQueues[SENDQ_ENERGY_INDEX]->dequeue();
+				packet = sendQueues[SENDQ_ENERGY_INDEX]->dequeuestr();
 				send(packet);
-				packet = sendQueues[SENDQ_TEMP_INDEX]->dequeue();
+				packet = sendQueues[SENDQ_TEMP_INDEX]->dequeuestr();
 				send(packet);
-				packet = sendQueues[SENDQ_STATIC_INDEX]->dequeue();
+				packet = sendQueues[SENDQ_STATIC_INDEX]->dequeuestr();
 				send(packet);
 				break;
 			}

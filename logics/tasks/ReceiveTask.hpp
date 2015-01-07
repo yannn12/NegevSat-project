@@ -28,8 +28,8 @@ public:
 	ReceiveTask(SendReceiveQueue::SendReceiveQueue* receiveQ);
 	virtual ~ReceiveTask();
 	void obtain_state();
-	string receive();
-	void enqueue_message(string msg);
+	vector<char> receive();
+	void enqueue_message(vector<char> msg);
 };
 
 #endif /* RECEIVETASK_HPP_ */

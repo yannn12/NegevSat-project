@@ -22,15 +22,18 @@ class SendReceiveQueue {
 
 private:
 	int size;
-	deque<string> pending_messages;
+	deque<vector<char> > pending_messages;
 	rtems_id mutex_id;
 	rtems_id produced_count_id;
 
 public:
 	SendReceiveQueue ();
 	~SendReceiveQueue(){}
+	void enqueue(vector<char> message);
+	vector<char> dequeue();
 	void enqueue(string message);
-	string dequeue();
+	string dequeuestr();
+
 };
 
 

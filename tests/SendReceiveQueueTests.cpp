@@ -32,11 +32,11 @@ char* SendReceiveQueueTests::test_basic(){
 	queue.enqueue(m4);
 	queue.enqueue(m5);
 
-	string d1 = queue.dequeue();
-	string d2 = queue.dequeue();
-	string d3 = queue.dequeue();
-	string d4 = queue.dequeue();
-	string d5 = queue.dequeue();
+	string d1 = queue.dequeuestr();
+	string d2 = queue.dequeuestr();
+	string d3 = queue.dequeuestr();
+	string d4 = queue.dequeuestr();
+	string d5 = queue.dequeuestr();
 
 	mu_assert("error, dequeue order incorrect", d1.compare(m1) == 0);
 	mu_assert("error, dequeue order incorrect", d2.compare(m2) == 0);
@@ -64,11 +64,11 @@ char* SendReceiveQueueTests::test_overflow() {
 			queue.enqueue(last);
 		}
 	}
-	string d = queue.dequeue();
+	string d = queue.dequeuestr();
 	mu_assert("error, dequeue order incorrect", d.compare(middle) == 0);
 
 	for (int i=0; i<SEND_RECEIVE_QUEUE_SIZE - 1; i++){
-		string dq = queue.dequeue();
+		string dq = queue.dequeuestr();
 		mu_assert("error, dequeue order incorrect", dq.compare(first) != 0);
 	}
 

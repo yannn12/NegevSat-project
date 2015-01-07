@@ -19,12 +19,13 @@ class UartCommunicationHandler : public ICommunicationHandler {
 
 private:
 	vector<string> input;
+	int restoreDelimiter(char * msg,int length);
 public:
 	UartCommunicationHandler ();
 	~UartCommunicationHandler(){}
 	bool send(char* buffer, int length);
-	string receive();
-	bool verifyBytes(string msg);
+	vector<char> receive();
+	bool verifyBytes(vector<char> msg);
 };
 
 

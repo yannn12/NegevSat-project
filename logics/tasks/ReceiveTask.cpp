@@ -25,11 +25,11 @@ ReceiveTask::~ReceiveTask() {
 	// TODO Auto-generated destructor stub
 }
 
-string ReceiveTask::receive(){
+vector<char> ReceiveTask::receive(){
 	return comm_handler->receive();
 }
 
-void ReceiveTask::enqueue_message(string msg){
+void ReceiveTask::enqueue_message(vector<char> msg){
 	receive_queue->enqueue(msg);
 }
 
@@ -57,7 +57,7 @@ rtems_task ReceiveTask::body(rtems_task_argument argument){
 		rtems_task_wake_after(
 				1 * 2 * rtems_clock_get_ticks_per_second());
 		//obtain_state();
-		string msg = receive();
+		vector<char> msg = receive();
 		if (comm_handler->verifyBytes(msg)){
 			enqueue_message(msg);
 		}

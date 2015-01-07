@@ -15,6 +15,7 @@
 #include "communication/SendReceiveQueue.hpp"
 #include "data_protocol/XMLValidator.hpp"
 #include "data_protocol/CMDParser.hpp"
+#include "data_protocol/ICMDParser.hpp"
 #include "data_protocol/WorkDescription.hpp"
 #include "data_protocol/WorkQueue.hpp"
 #include <string>
@@ -26,17 +27,14 @@ class MPTask : public rtemsTask  {
 
 private:
 	SendReceiveQueue::SendReceiveQueue* receive_queue;
-	IValidator::IValidator* validator;
 	WorkQueue::WorkQueue* works;
-	CMDParser::CMDParser parser;
+	ICMDParser *parser;
 
 protected:
 	virtual void body(rtems_task_argument argument);
 
 public:
 	MPTask(SendReceiveQueue::SendReceiveQueue* receiveQ, WorkQueue::WorkQueue* _works);
-	bool validateMessage();
-	vector<WorkDescription::WorkDescription> parseMessage();
 	void enqueueToWorks(WorkDescription::WorkDescription work);
 	virtual ~MPTask();
 };

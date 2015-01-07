@@ -50,35 +50,61 @@ bool UartCommunicationHandler::send(char* buffer, int length){
 }
 
 //TODO receive until a specific char arrived
-string UartCommunicationHandler::receive(){
+vector<char> UartCommunicationHandler::receive(){
 	int numBytes = 0;
 	char buffer[BUFF_SIZE];
 	int fd = open("/dev/console_b", O_RDWR /*| O_NOCTTY | _FNDELAY*/);
 	if (fd == -1){
-		return "";
+		vector<char> vec;
+		return vec;
 	}
 	//printf ("\nOpened COM1, fd=%d\n", fd);
 	numBytes = read(fd,buffer,BUFF_SIZE-1);
+	numBytes = restoreDelimiter(buffer,numBytes);
 	if (numBytes < 0) {
 		//printf ("receive error!!!\n");
 		close(fd);
-		return "";
+		vector<char> vec;
+		return vec;
 		// TODO exception handling
-	}
-	else {
-		buffer[numBytes] = 0; // terminate
 	}
 	printf ("\nReceiving data...\n");
 	close(fd);
-	string data(buffer, numBytes+1);
+	std::vector<char> data(buffer,buffer+numBytes-1);
 	return data;
 }
 
-bool UartCommunicationHandler::verifyBytes(string msg){
+bool UartCommunicationHandler::verifyBytes(vector<char> msg){
 	// TODO add CRC or other verification in future versions
-	if (msg.compare("") == 0){
+	if (msg.size()==0){
 		return false;
 	}
 	return true;
+}
+
+int UartCommunicationHandler::restoreDelimiter(char * msg,int length){
+	int i=0;
+	int j=0;
+	if(length<0)
+		return length;
+
+	for(i=0;i<length;i++){
+		if(msg[i]==0x11&&i == length-1)
+			return -1;
+		if(msg[i]==0x11&&msg[i+1]==0x12){
+			msg[j] = 0x10;
+			i++;
+		}
+		else if(msg[i]==0x11&&msg[i+1]==0x11){
+			msg[j] = 0x11;
+			i++;
+		}
+		else{
+			msg[j] = msg[i];
+		}
+		j++;
+	}
+
+	return j;
 }
 

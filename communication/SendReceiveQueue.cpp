@@ -35,6 +35,17 @@ SendReceiveQueue::SendReceiveQueue(){
 }
 
 void SendReceiveQueue::enqueue(string message){
+	vector<char> data(message.begin(), message.end());
+	enqueue(data);
+}
+string SendReceiveQueue::dequeuestr(){
+	vector<char> data = dequeue();
+	string result(data.begin(),data.end());
+	return result;
+}
+
+
+void SendReceiveQueue::enqueue(vector<char> message){
 	rtems_status_code status;
 	bool should_release = false;
 	/* Semaphore not available, ensured to block */
@@ -60,7 +71,7 @@ void SendReceiveQueue::enqueue(string message){
 	status = rtems_semaphore_release( mutex_id );
 }
 
-string SendReceiveQueue::dequeue(){
+vector<char> SendReceiveQueue::dequeue(){
 	rtems_status_code status;
 	status = rtems_semaphore_obtain(
 				produced_count_id,
@@ -74,7 +85,7 @@ string SendReceiveQueue::dequeue(){
 			RTEMS_NO_TIMEOUT
 	);
 
-	string message = pending_messages.front();
+	vector<char> message = pending_messages.front();
 	pending_messages.pop_front();
 	size--;
 	status = rtems_semaphore_release( mutex_id );
