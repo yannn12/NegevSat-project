@@ -8,7 +8,7 @@
 #ifndef CMDPARSERTESTS_HPP_
 #define CMDPARSERTESTS_HPP_
 
-#include "data_protocol/XMLValidator.hpp"
+#include "data_protocol/xml_protocol/XMLValidator.hpp"
 #include "data_protocol/CMDParser.hpp"
 #include "minunit.h"
 

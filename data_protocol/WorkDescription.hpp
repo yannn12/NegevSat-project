@@ -10,21 +10,26 @@
 
 class WorkDescription {
 private:
-	int code;
-	int priority;
 	unsigned long long timestamp;
+	char code;
+	int priority;
+	unsigned long long missionTime;
+
 	//TODO: add work params
 
 public:
 	WorkDescription ();
-	WorkDescription (int _code, int _priority, unsigned long long _time);
+	WorkDescription (unsigned long long _timestamp,int _code, int _priority, unsigned long long _time);
 	~WorkDescription(){}
-	void setCode(int _code);
-	int getCode();
+	void setCode(char _code);
+	char getCode();
 	void setPriority(int _priority);
 	int getPriority();
 	void setTimeStamp(unsigned long long _timestamp);
 	unsigned long long getTimestamp();
+	void setMissionTime(unsigned long long _missionTime);
+	unsigned long long getMissionTime();
+
 };
 
 

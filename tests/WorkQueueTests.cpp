@@ -24,10 +24,10 @@ char* WorkQueueTests::test_basic(){
 	unsigned long long time2 = 20150628123235ULL;
 	unsigned long long time3 = 20140627123235ULL;
 
-	WorkDescription::WorkDescription w1(MOVE_TO_OP, 1, 0);
-	WorkDescription::WorkDescription w2(MOVE_TO_SAFE, 1, time);
-	WorkDescription::WorkDescription w3(FORMAT_TEMP, 1, time2);
-	WorkDescription::WorkDescription w4(FORMAT_ENERGY, 1, time3);
+	WorkDescription::WorkDescription w1(0,MOVE_TO_OP, 1, 0);
+	WorkDescription::WorkDescription w2(time,MOVE_TO_SAFE, 1, time);
+	WorkDescription::WorkDescription w3(time2,FORMAT_TEMP, 1, time2);
+	WorkDescription::WorkDescription w4(time3,FORMAT_ENERGY, 1, time3);
 
 	works.enqueue(w1);
 	works.enqueue(w2);
@@ -55,15 +55,15 @@ char* WorkQueueTests::test_overflow(){
 	unsigned long long time = 20140628123235ULL;
 	for (int i=0; i<QUEUE_SIZE+1; i++){
 		if (i ==0){
-			WorkDescription::WorkDescription w(FORMAT_ENERGY, 1, time);
+			WorkDescription::WorkDescription w(time,FORMAT_ENERGY, 1, time);
 			works.enqueue(w);
 		}
 		else if (i != QUEUE_SIZE){
-			WorkDescription::WorkDescription w(MOVE_TO_OP, 1, time);
+			WorkDescription::WorkDescription w(time,MOVE_TO_OP, 1, time);
 			works.enqueue(w);
 		}
 		else {
-			WorkDescription::WorkDescription w(MOVE_TO_SAFE, 1, time);
+			WorkDescription::WorkDescription w(time,MOVE_TO_SAFE, 1, time);
 			works.enqueue(w);
 		}
 	}

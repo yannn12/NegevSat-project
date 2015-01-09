@@ -7,11 +7,10 @@
 
 #ifndef XMLCMDPARSER_HPP_
 #define XMLCMDPARSER_HPP_
-
 #include <data_protocol/ICMDParser.hpp>
 #include "data_protocol/IValidator.hpp"
 #include "third_party/rapidxml.hpp"
-#include "data_protocol/XMLValidator.hpp"
+#include "data_protocol/xml_protocol/XMLValidator.hpp"
 
 using namespace std;
 using namespace rapidxml;

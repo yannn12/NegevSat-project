@@ -13,17 +13,18 @@ WorkDescription::WorkDescription(){
 
 }
 
-WorkDescription::WorkDescription (int _code, int _priority, unsigned long long _time){
+WorkDescription::WorkDescription (unsigned long long _timestamp,int _code, int _priority, unsigned long long _time){
 	code = _code;
 	priority = _priority;
-	timestamp = _time;
+	timestamp = _timestamp;
+	missionTime=_time;
 }
 
-void WorkDescription::setCode(int _code){
+void WorkDescription::setCode(char _code){
 	code = _code;
 }
 
-int WorkDescription::getCode(){
+char WorkDescription::getCode(){
 	return code;
 }
 
@@ -41,4 +42,10 @@ void WorkDescription::setTimeStamp(unsigned long long _timestamp){
 
 unsigned long long WorkDescription::getTimestamp(){
 	return timestamp;
+}
+void WorkDescription::setMissionTime(unsigned long long _missionTime){
+	missionTime=_missionTime;
+}
+	unsigned long long WorkDescription::getMissionTime(){
+		return missionTime;
 }

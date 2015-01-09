@@ -9,7 +9,7 @@
 #define XMLVALIDATORTESTS_HPP_
 
 #include "minunit.h"
-#include "data_protocol/XMLValidator.hpp"
+#include "data_protocol/xml_protocol/XMLValidator.hpp"
 #include <string>
 
 using namespace std;

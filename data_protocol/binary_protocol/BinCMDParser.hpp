@@ -10,6 +10,7 @@
 
 #include <data_protocol/ICMDParser.hpp>
 
+
 class BinCMDParser: public ICMDParser {
 public:
 	virtual bool parsePacket(char* packet,int size,WorkDescription& result);

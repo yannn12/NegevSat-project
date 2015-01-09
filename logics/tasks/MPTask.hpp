@@ -13,7 +13,7 @@
 #include <rtems++/rtemsTask.h>
 #include <rtems++/rtemsTaskMode.h>
 #include "communication/SendReceiveQueue.hpp"
-#include "data_protocol/XMLValidator.hpp"
+#include "data_protocol/xml_protocol/XMLValidator.hpp"
 #include "data_protocol/CMDParser.hpp"
 #include "data_protocol/ICMDParser.hpp"
 #include "data_protocol/WorkDescription.hpp"
