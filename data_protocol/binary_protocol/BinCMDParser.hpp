@@ -14,6 +14,7 @@
 class BinCMDParser: public ICMDParser {
 public:
 	virtual bool parsePacket(char* packet,int size,WorkDescription& result);
+	bool IsParameterValid(unsigned long long ,char code,int priority,unsigned long long missionTime);
 	virtual ~BinCMDParser();
 	BinCMDParser();
 };
