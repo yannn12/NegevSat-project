@@ -89,14 +89,14 @@ int UartCommunicationHandler::restoreDelimiter(char * msg,int length){
 		return length;
 
 	for(i=0;i<length;i++){
-		if(msg[i]==0x11&&i == length-1)
+		if(msg[i]== 11&&i == length-1)
 			return -1;
-		if(msg[i]==0x11&&msg[i+1]==0x12){
-			msg[j] = 0x10;
+		if(msg[i] == 11&&msg[i+1] == 12){
+			msg[j] = 10;
 			i++;
 		}
-		else if(msg[i]==0x11&&msg[i+1]==0x11){
-			msg[j] = 0x11;
+		else if(msg[i]== 11&&msg[i+1] == 11){
+			msg[j] = 11;
 			i++;
 		}
 		else{
