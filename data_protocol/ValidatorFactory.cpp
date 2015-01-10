@@ -6,7 +6,7 @@
  */
 
 #include <data_protocol/ValidatorFactory.hpp>
-#include "data_protocol/XMLValidator.hpp"
+#include "data_protocol/xml_protocol/XMLValidator.hpp"
 #include <stdio.h>
 using namespace std;
 
