@@ -13,7 +13,7 @@ WorkDescription::WorkDescription(){
 
 }
 
-WorkDescription::WorkDescription (unsigned long long _timestamp,int _code, int _priority, unsigned long long _time){
+WorkDescription::WorkDescription (unsigned long long _timestamp,char _code, int _priority, unsigned long long _time){
 	code = _code;
 	priority = _priority;
 	timestamp = _timestamp;
