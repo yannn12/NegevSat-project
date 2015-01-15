@@ -14,6 +14,7 @@ class XmlTempsPacket: public TempsPacket {
 public:
 	XmlTempsPacket();
 	virtual ~XmlTempsPacket();
+	virtual void toBytes(vector<char> &result);
 };
 
 #endif /* XMLTEMPSPACKET_HPP_ */

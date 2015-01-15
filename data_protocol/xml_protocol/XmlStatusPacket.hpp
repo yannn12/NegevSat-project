@@ -14,6 +14,7 @@ class XmlStatusPacket: public StatusPacket {
 public:
 	XmlStatusPacket();
 	virtual ~XmlStatusPacket();
+	virtual void toBytes(vector<char> &result);
 };
 
 #endif /* XMLSTATUSPACKET_HPP_ */

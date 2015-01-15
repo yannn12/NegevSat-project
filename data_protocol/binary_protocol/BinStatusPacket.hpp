@@ -14,6 +14,7 @@ class BinStatusPacket: public StatusPacket {
 public:
 	BinStatusPacket();
 	virtual ~BinStatusPacket();
+	virtual void toBytes(vector<char> &result);
 };
 
 #endif /* BINSTATUSPACKET_HPP_ */

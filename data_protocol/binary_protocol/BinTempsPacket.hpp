@@ -14,6 +14,7 @@ class BinTempsPacket: public TempsPacket {
 public:
 	BinTempsPacket();
 	virtual ~BinTempsPacket();
+	virtual void toBytes(vector<char> &result);
 };
 
 #endif /* BINTEMPSPACKET_HPP_ */

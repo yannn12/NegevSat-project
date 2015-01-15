@@ -14,6 +14,7 @@ class BinEnergyPacket: public EnergyPacket {
 public:
 	virtual ~BinEnergyPacket();
 	BinEnergyPacket();
+	virtual void toBytes(vector<char> &result);
 };
 
 #endif /* BINENERGYPACKET_HPP_ */

@@ -10,7 +10,7 @@
 
 #include <data_protocol/abstract_datatype/EnergyPacket.hpp>
 
-class XmlEnergyPacket : EnergyPacket {
+class XmlEnergyPacket : public EnergyPacket {
 public:
 	XmlEnergyPacket();
 	virtual ~XmlEnergyPacket();
