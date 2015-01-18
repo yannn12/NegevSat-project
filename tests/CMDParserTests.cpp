@@ -23,7 +23,7 @@ CMDParserTests::~CMDParserTests() {
 char* assert_mission_is_correct(WorkDescription::WorkDescription* work, int code, int priority, unsigned long long time){
 	mu_assert("error", work->getCode() == code);
 	mu_assert("error", work->getPriority() == priority);
-	mu_assert("error", work->getTimestamp() == time);
+	mu_assert("error", work->getMissionTime() == time);
 	return 0;
 }
 

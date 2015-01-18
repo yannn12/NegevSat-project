@@ -72,7 +72,7 @@ BinCMDParserTests::BinCMDParserTests() {
 char* BinCMDParserTests::assert_mission_is_correct(WorkDescription::WorkDescription* work, unsigned long long timestamp,char code, int priority, unsigned long long time){
 		mu_assert("error", work->getCode() == code);
 		mu_assert("error", work->getPriority() == priority);
-		mu_assert("error", work->getTimestamp() == timestamp);
+		mu_assert("error", work->getMissionTime() == timestamp);
 		mu_assert("error", work->getMissionTime() == time);
 		return 0;
 }

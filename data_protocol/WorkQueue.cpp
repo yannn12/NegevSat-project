@@ -15,7 +15,7 @@
 using namespace std;
 
 bool workComparator (WorkDescription::WorkDescription i,WorkDescription::WorkDescription j) {
-	return (i.getTimestamp()>j.getTimestamp());
+	return (i.getMissionTime()>j.getMissionTime());
 }
 
 WorkQueue::WorkQueue(){

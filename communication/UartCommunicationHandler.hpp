@@ -20,6 +20,7 @@ class UartCommunicationHandler : public ICommunicationHandler {
 private:
 	vector<string> input;
 	int restoreDelimiter(char * msg,int length);
+	vector<char> hideDelimiter(char * msg,int length);
 public:
 	UartCommunicationHandler ();
 	~UartCommunicationHandler(){}

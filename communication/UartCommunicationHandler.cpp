@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <fcntl.h>
+#include <string.h>
 #include <unistd.h>
 #include <iostream>
 
@@ -28,16 +29,25 @@ UartCommunicationHandler::UartCommunicationHandler(){
 bool UartCommunicationHandler::send(char* buffer, int length){
 
 	//printf ("*** opening uart ***\n");
-
+	char temp2[1024];
+	char temp3[1024];
 	int fd = open("/dev/console_b", O_RDWR | O_NOCTTY | _FNDELAY);
 
 	if (fd == -1){
 		return false;
 	}
-
+	for(int i=0;i<length;i++){
+		printf("%d,",buffer[i]);
+	}
+	printf("\n");
 	//printf("Opened COM1, fd=%d\n\n", fd);
-
-	int numBytes = write(fd, buffer, length);
+	memcpy(temp3,buffer,length);
+	vector<char> fixedBuffer = hideDelimiter(buffer,length);
+	fixedBuffer.push_back(10);
+	if(fixedBuffer.size()<=0)
+		return false;
+	memcpy(temp2,&fixedBuffer[0],fixedBuffer.size());
+	int numBytes = write(fd, &fixedBuffer[0], fixedBuffer.size());
 
 	if (numBytes < 0) {
 		printf ("\nFailed to send from COM1!\n");
@@ -108,3 +118,22 @@ int UartCommunicationHandler::restoreDelimiter(char * msg,int length){
 	return j;
 }
 
+vector<char> UartCommunicationHandler::hideDelimiter(char * msg,int length){
+	vector<char> result;
+	for(int i=0;i<length;i++){
+		if(msg[i] == 10){
+			result.push_back(11);
+			result.push_back(12);
+		}
+		else if(msg[i] == 11){
+			result.push_back(11);
+			result.push_back(11);
+		}
+		else{
+			result.push_back(msg[i]);
+		}
+	}
+	return result;
+
+
+}

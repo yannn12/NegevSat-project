@@ -6,6 +6,7 @@
 // Description : NegevSat Airborne system
 //============================================================================
 #include <data_protocol/abstract_datatype/PacketFactory.hpp>
+#include <data_protocol/binary_protocol/BinPacketFactory.hpp>
 #include <data_protocol/xml_protocol/XmlPacketFactory.hpp>
 
 #define CONFIGURE_INIT
@@ -93,7 +94,7 @@ rtems_task Init(rtems_task_argument )
 {
 	set_time();
 
-	PacketFactory::factory = new XmlPacketFactory();
+	PacketFactory::factory = new BinPacketFactory();
 
 	if(tests){
 		AllTests::AllTests tests(/*CMD_PARSER_TESTS*/ /*TLM_PARSER_TESTS*/ /*SEND_TESTS*/ /*RECEIVE_TESTS*//*VALIDATOR_TESTS*/ /*WORK_QUEUE_TESTS*/ ALL_TESTS);

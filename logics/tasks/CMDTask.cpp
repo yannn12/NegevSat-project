@@ -28,7 +28,7 @@ void CMDTask::schedule_work(WorkDescription::WorkDescription work){
 bool CMDTask::time_has_come(WorkDescription::WorkDescription work){
 	rtems_clock_get_tod( &current_time);
 	unsigned long long curr_time = time_to_long();
-	if (work.getTimestamp() == 0)
+	if (work.getMissionTime() == 0)
 		return true;
 	if (curr_time >= work.getTimestamp()){
 		return true;

@@ -147,6 +147,7 @@ void LifeCycleTask::control_unit_samples(){
 		//printf("TEMPERATURE_STR:%s\n",&resultTemps[0]);
 		send_queues[SENDQ_ENERGY_INDEX]->enqueue(resultEne);
 		send_queues[SENDQ_TEMP_INDEX]->enqueue(resultTemps);
+		samples_counter = 0;
 
 	}
 	vector<char> resultStatus;

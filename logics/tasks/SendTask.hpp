@@ -31,6 +31,7 @@ public:
 	void obtain_state();
 	void obtain_send_type();
 	void send(string packet);
+	void send(vector<char> packet);
 	string dequeueMessage(int index);
 };
 #endif /* SENDTASK_HPP_ */
