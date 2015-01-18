@@ -17,12 +17,22 @@ bool BinCMDParser::parsePacket(char* packet,int size,WorkDescription& result){
 	}
 	 try
 	 {
-		WorkDescription* work=(WorkDescription*)packet;
+		 typedef struct
+		 {
+			 unsigned long long timestamp;
+			 char code;
+			 int priority;
+			 unsigned long long missionTime;
+		 } __attribute__((packed)) Workpacket;
+
+
+		 Workpacket* work=(Workpacket*)packet;
+
 		//unsigned long long timestamp = convert_time_chars_to_long(work->getTimestamp());
-		unsigned long long timestamp = work->getTimestamp();
-		char code=work->getCode();
-		int priority=work->getPriority();
-		unsigned long long missionTime=work->getMissionTime();
+		unsigned long long timestamp = work->timestamp;
+		char code=work->code;
+		int priority=work->priority;
+		unsigned long long missionTime=work->missionTime;
 		//unsigned long long missionTime=convert_time_chars_to_long(work->getMissionTime());
 
 		printf("BinCMDParser Get timestamp{%llu} code{%d} priority{%d} missionTime{%llu} \n",timestamp,code,priority,missionTime);

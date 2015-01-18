@@ -14,6 +14,7 @@
 #include "data_protocol/xml_protocol/XmlCMDParser.hpp"
 #include <data_protocol/binary_protocol/BinCMDParser.hpp>
 
+
 using namespace std;
 
 MPTask::MPTask(SendReceiveQueue::SendReceiveQueue* receiveQ, WorkQueue::WorkQueue* _works) {
