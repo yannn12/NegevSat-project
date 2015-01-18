@@ -12,13 +12,14 @@
 #include <rtems++/rtemsEvent.h>
 #include "data_protocol/ValidatorFactory.hpp"
 #include "data_protocol/xml_protocol/XmlCMDParser.hpp"
+#include <data_protocol/binary_protocol/BinCMDParser.hpp>
 
 using namespace std;
 
 MPTask::MPTask(SendReceiveQueue::SendReceiveQueue* receiveQ, WorkQueue::WorkQueue* _works) {
 	receive_queue = receiveQ;
 	works = _works;
-	parser = new XmlCMDParser();
+	parser = new BinCMDParser();
 }
 
 MPTask::~MPTask() {

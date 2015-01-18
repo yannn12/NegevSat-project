@@ -9,10 +9,25 @@
 #define STATUSPACKET_HPP_
 
 #include <data_protocol/abstract_datatype/Packet.hpp>
+namespace Status {
 
-enum Component {Sband,Temperature,Energy,SolarPanels,Payload,ThermalControl};
+enum Status {ON,MALFUNCTION,NON_OPERATIONAL,STANDBY};
 
-enum Status {ON,STANDBY};
+}  // namespace Status
+
+
+namespace Component {
+enum Component {Energy,Payload,Sband,Temperature,SolarPanels,ThermalControl};
+
+
+}  // namespace Component
+
+
+
+
+static const char * ComponentStrings[] = { "Energy", "Payload", "Sband", "Temperature", "SolarPanels","ThermalControl"};
+
+static const char * StatusStrings[] = { "ON","MALFUNCTION","NON_OPERATIONAL", "STANDBY"};
 
 typedef struct
 {
@@ -30,7 +45,7 @@ public:
 	virtual void toBytes(vector<char> &result) =0;
 	virtual ~StatusPacket();
 	StatusPacket();
-	const vector<ComponentInfo>& getComponentsInfo() const;
+	vector<ComponentInfo>& getComponentsInfo();
 	void setComponentsInfo(const vector<ComponentInfo>& componentsInfo);
 
 private:

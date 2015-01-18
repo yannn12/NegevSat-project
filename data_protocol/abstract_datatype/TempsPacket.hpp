@@ -24,7 +24,7 @@ public:
 	TempsPacket();
 	virtual ~TempsPacket();
 	virtual void toBytes(vector<char> &result) =0;
-	const vector<TempSample>& getTempSamples() const;
+	vector<TempSample>& getTempSamples();
 	void setTempSamples(const vector<TempSample>& tempSamples);
 
 private:

@@ -20,4 +20,8 @@ public:
 	virtual ~PacketFactory(){}
 };
 
+
+//PacketFactory * PacketFactory::factory = 0;
+
+
 #endif /* PACKETFACTORY_HPP_ */

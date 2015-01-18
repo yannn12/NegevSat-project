@@ -10,17 +10,19 @@ using namespace std;
 
 namespace stringutils{
 
-string int_to_string(int number, string str){
+string int_to_string(int number, string& str){
 	stringstream out;
 	out << number;
 	str = out.str();
+	str.append("");
 	return str;
 }
 
-string unsigned_long_to_string(unsigned long long number, string str){
+string unsigned_long_to_string(unsigned long long number, string& str){
 	stringstream ss;
 	ss << number;
 	str = ss.str();
+	str.append("");
 	return str;
 }
 

@@ -5,6 +5,8 @@
  *      Author: dariaz
  */
 
+#include <data_protocol/abstract_datatype/PacketFactory.hpp>
+#include <data_protocol/abstract_datatype/StatusPacket.hpp>
 #include <logics/tasks/LifeCycleTask.hpp>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,6 +27,9 @@ LifeCycleTask::LifeCycleTask(WorkQueue::WorkQueue* _rdy_works, SendReceiveQueue:
 	state = INIT_STATE;
 	executor.setModulesRequest(&modules_request);
 	sampler.setHardware(&hardware);
+	enePacket = 0;
+	statPacket = 0;
+	tempsPacket = 0;
 }
 
 LifeCycleTask::~LifeCycleTask() {
@@ -92,8 +97,65 @@ void LifeCycleTask::obtain_state(){
  * Samples control unit - critical samples (read using I2C)
  */
 void LifeCycleTask::control_unit_samples(){
-	//printf(" * LifeCycle TASK:: control_unit_samples *\n");
+	//EnergyPacket* enePacket
+	//TempsPacket* tempsPacket;
+	if(enePacket == 0){
+		enePacket =  PacketFactory::factory->createEnergyPacket();
+		tempsPacket =  PacketFactory::factory->createTempsPacket();
+		statPacket= PacketFactory::factory->createStatusPacket();
+	}
 
+	if (samples_counter == 0){
+		enePacket->getSamples().clear();
+		tempsPacket->getTempSamples().clear();
+	}
+	statPacket->getComponentsInfo().clear();
+
+	//StatusPacket* statusPacket= PacketFactory::factory->createStatusPacket();
+	rtems_clock_get_tod( &current_time);
+	BattaryInfo battary;
+	TempSample tempSample;
+	ComponentInfo compInfo;
+
+	sampler.createEnergySample(battary);
+	enePacket->getSamples().push_back(battary);
+	sampler.createTempSample(tempSample);
+	tempsPacket->getTempSamples().push_back(tempSample);
+
+
+	sampler.createStatusSample(compInfo,Component::Sband);
+	statPacket->getComponentsInfo().push_back(compInfo);
+	sampler.createStatusSample(compInfo,Component::Temperature);
+	statPacket->getComponentsInfo().push_back(compInfo);
+	sampler.createStatusSample(compInfo,Component::Energy);
+	statPacket->getComponentsInfo().push_back(compInfo);
+	sampler.createStatusSample(compInfo,Component::SolarPanels);
+	statPacket->getComponentsInfo().push_back(compInfo);
+	sampler.createStatusSample(compInfo,Component::Payload);
+	statPacket->getComponentsInfo().push_back(compInfo);
+	sampler.createStatusSample(compInfo,Component::ThermalControl);
+	statPacket->getComponentsInfo().push_back(compInfo);
+
+	samples_counter++;
+
+	if (samples_counter == MAX_SAMPLES){
+		vector<char> resultEne;
+		vector<char> resultTemps;
+		enePacket->toBytes(resultEne);
+		tempsPacket->toBytes(resultTemps);
+		//printf("ENERGY_STR:%s\n",&resultEne[0]);
+		//printf("TEMPERATURE_STR:%s\n",&resultTemps[0]);
+		send_queues[SENDQ_ENERGY_INDEX]->enqueue(resultEne);
+		send_queues[SENDQ_TEMP_INDEX]->enqueue(resultTemps);
+
+	}
+	vector<char> resultStatus;
+	statPacket->toBytes(resultStatus);
+	//printf("STATIC_STR:%s\n",&resultStatus[0]);
+	send_queues[SENDQ_STATIC_INDEX]->enqueue(resultStatus);
+
+	/*
+	//printf(" * LifeCycle TASK:: control_unit_samples *\n");
 	if (samples_counter == 0){
 		parser.createPacket("",ENERGY_STR);
 		parser.createPacket("", TEMPERATURE_STR);
@@ -126,14 +188,21 @@ void LifeCycleTask::control_unit_samples(){
 	// when packets are filled with details push them into the send queues and remove them from
 	// parser to prevent memory leak and keep the invariant that parser always keeps 3 packets ONLY!
 	if (samples_counter == MAX_SAMPLES){
-		send_queues[SENDQ_ENERGY_INDEX]->enqueue(parser.getPacket(ENERGY_STR)->packetToString());
+		string temp = parser.getPacket(ENERGY_STR)->packetToString();
+		const char * temp2 = temp.c_str();
+		printf("ENERGY_STR:%s\n",temp2);
+		send_queues[SENDQ_ENERGY_INDEX]->enqueue(temp);
 		parser.removePacket(ENERGY_STR);
-		send_queues[SENDQ_TEMP_INDEX]->enqueue(parser.getPacket(TEMPERATURE_STR)->packetToString());
+		string temp3 = parser.getPacket(TEMPERATURE_STR)->packetToString();
+		printf("TEMPERATURE_STR:%s\n",temp3.c_str());
+		send_queues[SENDQ_TEMP_INDEX]->enqueue(temp3);
 		parser.removePacket(TEMPERATURE_STR);
 		samples_counter = 0;
 	}
-	send_queues[SENDQ_STATIC_INDEX]->enqueue(parser.getPacket(STATIC_STR)->packetToString());
-	parser.removePacket(STATIC_STR);
+	string temp4 = parser.getPacket(STATIC_STR)->packetToString();
+	printf("STATIC_STR:%s\n",temp4.c_str());
+	send_queues[SENDQ_STATIC_INDEX]->enqueue(temp4);
+	parser.removePacket(STATIC_STR);*/
 }
 
 void LifeCycleTask::attitude_control(int counter){

@@ -16,7 +16,7 @@ TempsPacket::~TempsPacket() {
 	// TODO Auto-generated destructor stub
 }
 
-const vector<TempSample>& TempsPacket::getTempSamples() const {
+vector<TempSample>& TempsPacket::getTempSamples(){
 	return tempSamples;
 }
 

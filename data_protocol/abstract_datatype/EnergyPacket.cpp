@@ -11,7 +11,7 @@ EnergyPacket::~EnergyPacket() {
 	// TODO Auto-generated destructor stub
 }
 
-const vector<BattaryInfo>& EnergyPacket::getSamples() const {
+vector<BattaryInfo>& EnergyPacket::getSamples() {
 	return samples;
 }
 

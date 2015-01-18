@@ -22,7 +22,7 @@ class EnergyPacket: public Packet {
 public:
 	virtual void toBytes(vector<char> &result) =0;
 	virtual ~EnergyPacket();
-	const vector<BattaryInfo>& getSamples() const;
+	vector<BattaryInfo>& getSamples();
 	void setSamples(const vector<BattaryInfo>& samples);
 
 private:

@@ -16,7 +16,7 @@ StatusPacket::StatusPacket() {
 
 }
 
-const vector<ComponentInfo>& StatusPacket::getComponentsInfo() const {
+vector<ComponentInfo>& StatusPacket::getComponentsInfo() {
 	return componentsInfo;
 }
 

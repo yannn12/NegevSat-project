@@ -11,6 +11,10 @@
 #include "logics/SendReceiveConf.hpp"
 #include <map>
 
+#include "utils/timeutils.hpp"
+
+using namespace timeutils;
+
 using namespace std;
 using namespace stringutils;
 
@@ -149,4 +153,23 @@ Sample::Sample* Sampler::createSample(string type, bool i2c, unsigned long long 
 		Sample::Sample* sample = new Sample::Sample(MODULE_STR, time_str);
 		return sample;
 	}
+}
+
+void Sampler::createEnergySample(BattaryInfo& battary) {
+	battary.current = hardware->getEnergyCurrent(true);;
+	battary.voltage = hardware->getValue(HW_ENERGY_MODULE,true);;
+	battary.time = time_to_long();
+
+}
+
+void Sampler::createTempSample(TempSample& temps) {
+	temps.temperature = hardware->getValue(HW_TEMP_MODULE,true);
+	temps.time = time_to_long();
+
+}
+
+void Sampler::createStatusSample(ComponentInfo& compInfo, Component::Component module) {
+	compInfo.componentCode = (unsigned char)module;
+	compInfo.status = hardware->getStatus(module);
+	compInfo.time = time_to_long();
 }

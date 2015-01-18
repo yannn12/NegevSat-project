@@ -5,6 +5,8 @@
 // Copyright   : Your copyright notice
 // Description : NegevSat Airborne system
 //============================================================================
+#include <data_protocol/abstract_datatype/PacketFactory.hpp>
+#include <data_protocol/xml_protocol/XmlPacketFactory.hpp>
 
 #define CONFIGURE_INIT
 #define TEST_AMOUNT 20
@@ -91,8 +93,10 @@ rtems_task Init(rtems_task_argument )
 {
 	set_time();
 
+	PacketFactory::factory = new XmlPacketFactory();
+
 	if(tests){
-		AllTests::AllTests tests(/*CMD_PARSER_TESTS*/ /*TLM_PARSER_TESTS*/ /*SEND_TESTS*/ /*RECEIVE_TESTS*//*VALIDATOR_TESTS*/ /*WORK_QUEUE_TESTS*/ SEND_RECEIVE_TESTS);
+		AllTests::AllTests tests(/*CMD_PARSER_TESTS*/ /*TLM_PARSER_TESTS*/ /*SEND_TESTS*/ /*RECEIVE_TESTS*//*VALIDATOR_TESTS*/ /*WORK_QUEUE_TESTS*/ ALL_TESTS);
 		tests.run_all_tests();
 	}
 

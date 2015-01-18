@@ -37,6 +37,9 @@ private:
 	ModulesOperationRequest::ModulesOperationRequest modules_request;
 	int samples_counter;
 	int state;
+	EnergyPacket *enePacket;
+	StatusPacket *statPacket;
+	TempsPacket *tempsPacket;
 
 protected:
 	virtual void body(rtems_task_argument argument);
