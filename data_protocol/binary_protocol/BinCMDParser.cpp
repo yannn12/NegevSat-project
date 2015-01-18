@@ -17,23 +17,24 @@ bool BinCMDParser::parsePacket(char* packet,int size,WorkDescription& result){
 	}
 	 try
 	 {
-//		WorkDescription* work=(WorkDescription*)packet;
-//		int sizeofwork=sizeof(WorkDescription);
-//		//unsigned long long timestamp = convert_time_chars_to_long(work->getTimestamp());
-//		unsigned long long timestamp = work->getTimestamp();
-//		char code=work->getCode();
-//		int priority=work->getPriority();
-//		unsigned long long missionTime=work->getMissionTime();
-//		//unsigned long long missionTime=convert_time_chars_to_long(work->getMissionTime());
-		 char* p= packet;
+		 typedef struct
+		 {
+			 unsigned long long timestamp;
+			 char code;
+			 int priority;
+			 unsigned long long missionTime;
+		 } __attribute__((packed)) Workpacket;
 
-		unsigned long long timestamp =(unsigned long long)(*p);
-		p=p+8;
-		char code=*p;
-		p=p+1;
-		int priority=(int)(*p);
-		p=p+4;
-		unsigned long long missionTime=(unsigned long long)(*p);
+
+		 Workpacket* work=(Workpacket*)packet;
+
+		//unsigned long long timestamp = convert_time_chars_to_long(work->getTimestamp());
+		unsigned long long timestamp = work->timestamp;
+		char code=work->code;
+		int priority=work->priority;
+		unsigned long long missionTime=work->missionTime;
+		//unsigned long long missionTime=convert_time_chars_to_long(work->getMissionTime());
+
 		printf("BinCMDParser Get timestamp{%llu} code{%d} priority{%d} missionTime{%llu} \n",timestamp,code,priority,missionTime);
 		if(BinCMDParser::IsParameterValid(timestamp,code,priority,missionTime)){
 			result.setTimeStamp(timestamp);
